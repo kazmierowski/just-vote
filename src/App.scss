@@ -1,0 +1,20 @@
+$header-height: 30px;
+
+.App {
+
+  padding-top: $header-height;
+
+  &-header {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+
+    height: $header-height;
+    text-align: center;
+
+    &-version {
+      font-size: 8px;
+    }
+  }
+}
