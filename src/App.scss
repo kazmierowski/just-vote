@@ -2,7 +2,9 @@ $header-height: 30px;
 
 .App {
 
-  padding-top: $header-height;
+  //padding-top: $header-height;
+  min-height: 100vh;
+  position: relative;
 
   &-header {
     position: absolute;
@@ -16,5 +18,9 @@ $header-height: 30px;
     &-version {
       font-size: 8px;
     }
+  }
+
+  &-content {
+    height: 100%;
   }
 }

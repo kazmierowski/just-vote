@@ -9,29 +9,24 @@ class App extends Component {
         return (
 
             <Router>
-                <div className="App" id="outer-container">
+                <div className="App" id="App-outer-container">
                     <Menu/>
-                    <div id="page-wrap">
+                    <div id="App-page-wrap">
                         <header className="App-header">
                             <p>
                                 just vote <span className="App-header-version">v.0.1</span>
                             </p>
                         </header>
-                        {routes.map((route, index) => (
-                            // You can render a <Route> in as many places
-                            // as you want in your app. It will render along
-                            // with any other <Route>s that also match the URL.
-                            // So, a sidebar or breadcrumbs or anything else
-                            // that requires you to render multiple things
-                            // in multiple places at the same URL is nothing
-                            // more than multiple <Route>s.
-                            <Route
-                                key={index}
-                                path={route.path}
-                                exact={route.exact}
-                                component={route.component}
-                            />
-                        ))}
+                        <div className="App-content">
+                            {routes.map((route, index) => (
+                                <Route
+                                    key={index}
+                                    path={route.path}
+                                    exact={route.exact}
+                                    component={route.component}
+                                />
+                            ))}
+                        </div>
                     </div>
                 </div>
             </Router>

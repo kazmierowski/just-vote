@@ -8,13 +8,10 @@ class SideMenu extends Component {
 
     render () {
         return (
-            <Menu pageWrapId={"page-wrap"} outerContainerId={"outer-container"}>
+            <Menu pageWrapId={"App-page-wrap"} outerContainerId={"App-outer-container"}>
                 {routes.map((route, index) => (
                     <Link key={index} id={route.id} className="menu-item" to={route.path}>{route.name}</Link>
                 ))}
-                {/*<Link id="home" className="menu-item" to="/">Home</Link>*/}
-                {/*<Link id="insert" className="menu-item" to="/insert">Insert names</Link>*/}
-                {/*<Link id="contact" className="menu-item" to="/contact">Contact</Link>*/}
             </Menu>
         );
     }
