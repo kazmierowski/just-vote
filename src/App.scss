@@ -1,24 +1,9 @@
-$header-height: 30px;
+@import './variables.scss';
 
 .App {
 
-  //padding-top: $header-height;
+  display: block;
   min-height: 100vh;
-  position: relative;
-
-  &-header {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-
-    height: $header-height;
-    text-align: center;
-
-    &-version {
-      font-size: 8px;
-    }
-  }
 
   &-content {
     height: 100%;
