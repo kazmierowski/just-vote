@@ -3,12 +3,16 @@
 .Header {
   display: block;
 
-  height: $header-height;
+  //height: $header-height;
+  padding: $header-padding-top 0 $header-padding-bottom 0;
+
   top: 0;
   left: 0;
   right: 0;
 
   text-align: center;
+
+  border-bottom: 1px solid rgba($c-text-colour-main, 0.1);
 
   p {
     margin: 0;

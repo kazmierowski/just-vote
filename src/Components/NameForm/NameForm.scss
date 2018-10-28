@@ -1,0 +1,100 @@
+@import './../../variables.scss';
+
+@mixin transition {
+  transition: all 0.25s cubic-bezier(.53,.01,.35,1.5);
+}
+
+.NameForm {
+  position: relative;
+
+  h1 {
+    text-transform: uppercase;
+  }
+
+  &-input-wrapper {
+    position: relative;
+    padding: 10px 0;
+
+    label {
+      @include transition;
+
+      transform-origin: left center;
+      color: $c-vd-blue;
+      font-weight: 100;
+      letter-spacing: 0.01em;
+      font-size: 17px;
+      box-sizing: border-box;
+      padding: 10px 15px;
+      display: block;
+      position: absolute;
+      margin-top: -40px;
+      z-index: 2;
+      pointer-events: none;
+    }
+
+    input[type="text"] {
+      @include transition;
+
+      appearance: none;
+      background-color: transparent;
+      border: 1px solid $c-vd-blue;
+      line-height: 0;
+      font-size: 17px;
+      width: 100%;
+      display: block;
+      box-sizing: border-box;
+      padding: 10px 15px;
+      border-radius: 60px;
+      color: $c-vd-blue;
+      font-weight: 100;
+      letter-spacing: 0.01em;
+      position: relative;
+      z-index: 1;
+
+      &:focus {
+        outline: none;
+        background: $c-vd-blue;
+        color: white;
+        margin-top: 30px;
+      }
+
+      &.not-empty {
+        margin-top: 30px;
+      }
+
+      &:focus ~ label {
+        transform: translate(0, -35px) scale(0.7);
+      }
+
+      &.not-empty ~ label {
+        font-style: italic;
+        transform: translate( 5px , -35px ) scale(0.6);
+      }
+    }
+  }
+
+  &-button-submit {
+    @include transition;
+
+    margin-top: 15px;
+    background-color: white;
+    border: 1px solid $c-vd-blue;
+    line-height: 0;
+    font-size: 17px;
+    display: inline-block;
+    box-sizing: border-box;
+    padding: 20px 15px;
+    border-radius: 60px;
+    color: $c-vd-blue;
+    font-weight: 100;
+    letter-spacing: 0.01em;
+    position: relative;
+    z-index: 1;
+
+    &:hover , &:focus {
+      outline: none;
+      color: white;
+      background-color: $c-vd-blue;
+    }
+  }
+}

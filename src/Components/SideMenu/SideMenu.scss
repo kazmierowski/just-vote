@@ -1,10 +1,12 @@
+@import './../../variables.scss';
+
 /* Position and sizing of burger button */
 .bm-burger-button {
   position: fixed;
   width: 15px;
   height: 15px;
   left: 15px;
-  top: 30px;
+  top: $header-padding-top;
 }
 
 /* Color/shape of burger icon bars */
