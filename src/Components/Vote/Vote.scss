@@ -1,0 +1,34 @@
+@import './../../variables.scss';
+
+.Vote {
+
+  position: relative;
+
+  &-select {
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: normal;
+    text-align: center;
+    min-height: 90vh;
+
+    list-style-type: none;
+    padding: 0;
+
+    &-element {
+
+      font-size: 20px;
+      font-weight: lighter;
+      letter-spacing: 3px;
+
+      padding: 15px;
+      cursor: pointer;
+
+      &.selected {
+        font-weight: bold;
+        color: $c-vd-blue;
+      }
+    }
+  }
+}

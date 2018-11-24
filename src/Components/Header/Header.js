@@ -8,7 +8,7 @@ class Header extends Component {
         return(
             <header className="Header">
                 <p>
-                    just vote <span className="App-header-version">v.0.1</span>
+                    just vote <span className="Header-version">v.0.1</span>
                 </p>
             </header>
         )

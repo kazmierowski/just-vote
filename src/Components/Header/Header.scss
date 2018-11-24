@@ -16,9 +16,11 @@
 
   p {
     margin: 0;
+    letter-spacing: 5px;
   }
 
   &-version {
-    font-size: 8px;
+    font-size: 10px;
+    letter-spacing: 1px !important;
   }
 }
