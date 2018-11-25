@@ -6,15 +6,24 @@ export const loginUser = (credentials) => {
 
     return dispatch => {
 
+        console.log('credentials from action', credentials);
         dispatch(loginUserStarted());
 
-        axios.post(window.location.host + '/user/login', credentials)
-            .then(res => {
-                dispatch(loginUserCompleted(res.data))
-            })
-            .catch(error => {
-                dispatch(loginUserError(error.message))
-            })
+        // axios.post(window.location.protocol + '//' + window.location.host + '/user/login', credentials)
+        //     .then(res => {
+        //         setTimeout(() => { // for smoothness
+        //             dispatch(loginUserCompleted(res.data))
+        //         }, 2000)
+        //     })
+        //     .catch(error => {
+        //         setTimeout(() => { // for smoothness
+        //             dispatch(loginUserError(error))
+        //         }, 2000)
+        //     })
+
+        setTimeout(() => {
+            dispatch(loginUserCompleted({success: true}))
+        }, 2000);
     }
 }
 

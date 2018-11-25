@@ -2,10 +2,9 @@ import React, {Component} from 'react';
 import './App.scss';
 import Menu from './Components/SideMenu/SideMenu';
 import Header from './Components/Header/Header';
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import {BrowserRouter as Router, Redirect, Route, Switch} from "react-router-dom";
 import { routes } from './router';
 import {connect} from "react-redux";
-import Login from "./Components/Login/Login";
 
 class App extends Component {
 
@@ -17,11 +16,13 @@ class App extends Component {
             window.location.href = "/login";
         }
     }
-
+    
     render() {
+        console.log('app render again');
         let router;
 
         if(this.props.loggedIn) {
+
             router = (routes) => {
                 return routes.map((route, index) => (
                     <Route
@@ -33,14 +34,16 @@ class App extends Component {
                 ))
             };
         } else {
-            router = () => {
-                return <Route
-                    key={101}
-                    path={'/login'}
-                    exact={true}
-                    component={Login}
-                />
-            }
+            // router = () => {
+            //     return <Route
+            //         key={101}
+            //         path={'/login'}
+            //         exact={true}
+            //         component={Login}
+            //     />
+            // }
+
+            router = () => {return <Redirect to='/login' />}
         }
 
 
@@ -52,7 +55,18 @@ class App extends Component {
                     <div id="App-page-wrap">
                         <Header/>
                         <div className="App-content">
-                            {router(routes)}
+                            <Switch>
+                            {
+                                routes.map((route, index) => (
+                                    <Route
+                                        key={index}
+                                        path={route.path}
+                                        exact={route.exact}
+                                        component={route.component}
+                                    />
+                                ))
+                            }
+                            </Switch>
                         </div>
                     </div>
                 </div>
@@ -61,7 +75,7 @@ class App extends Component {
     }
 }
 
-const mapStateToProps = (state, ownProps) => ({
+const mapStateToProps = (state) => ({
     loggedIn: state.user.loggedIn
 });
 

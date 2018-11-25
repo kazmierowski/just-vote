@@ -2,6 +2,7 @@ import Insert from './Components/Insert/Insert';
 import Home from "./Components/Home/Home";
 import About from "./Components/About/About";
 import Vote from "./Components/Vote/Vote";
+import Login from "./Components/Login/Login";
 
 export const routes = [
     {
@@ -30,5 +31,12 @@ export const routes = [
         path: '/about',
         exact: false,
         component: About
+    },
+    {
+        name: 'Login',
+        id: 'login',
+        path: '/login',
+        exact: false,
+        component: Login
     }
 ]
