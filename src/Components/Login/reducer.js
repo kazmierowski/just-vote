@@ -1,4 +1,5 @@
 const initialState = {
+    id: null,
     loggedIn: false,
     loading: false,
     names: [],
@@ -16,9 +17,9 @@ export const userReducer = (state = initialState, action) => {
             }
 
         case 'LOGIN_USER_COMPLETED':
-            console.log('user login completed from reducer');
+            console.log('user login completed from reducer', action.response);
             return {
-                ...state, loggedIn: true, loading: false
+                ...state, loggedIn: true, loading: false, id: action.response.voter.id
             }
 
         case 'LOGIN_USER_ERROR':

@@ -1,12 +1,15 @@
 let express = require('express');
 let pathJoin = require('path.join');
-let bodyParser = require('body-parser')
+let bodyParser = require('body-parser');
+let vl = require('./objects/VotersList');
 
 const server = express();
 const ws = require('express-ws')(server);
 const portFinder = require('portfinder');
 
 const userRouter = require('./routes/user');
+
+let votersList = new vl();
 
 server.use(bodyParser.urlencoded({
     extended: true
