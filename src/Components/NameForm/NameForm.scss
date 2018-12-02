@@ -19,7 +19,7 @@
       @include transition;
 
       transform-origin: left center;
-      color: $c-vd-blue;
+      color: $c-text-colour-main;
       font-weight: 100;
       letter-spacing: 0.01em;
       font-size: 17px;
@@ -37,7 +37,7 @@
 
       appearance: none;
       background-color: transparent;
-      border: 1px solid $c-vd-blue;
+      border: 1px solid $c-text-colour-main;
       line-height: 0;
       font-size: 17px;
       width: 100%;
@@ -45,16 +45,17 @@
       box-sizing: border-box;
       padding: 10px 15px;
       border-radius: 60px;
-      color: $c-vd-blue;
+      color: $c-text-colour-main;
       font-weight: 100;
       letter-spacing: 0.01em;
       position: relative;
       z-index: 1;
+      text-align: center;
 
       &:focus {
         outline: none;
-        background: $c-vd-blue;
-        color: white;
+        background: $c-text-colour-main;
+        color: $c-background-dark;
         margin-top: 30px;
       }
 
@@ -77,15 +78,15 @@
     @include transition;
 
     margin-top: 15px;
-    background-color: white;
-    border: 1px solid $c-vd-blue;
+    background-color: $c-background-dark;
+    border: 1px solid $c-text-colour-main;
     line-height: 0;
     font-size: 17px;
     display: inline-block;
     box-sizing: border-box;
     padding: 20px 15px;
     border-radius: 60px;
-    color: $c-vd-blue;
+    color: $c-accent;
     font-weight: 100;
     letter-spacing: 0.01em;
     position: relative;
@@ -93,8 +94,9 @@
 
     &:hover , &:focus {
       outline: none;
-      color: white;
-      background-color: $c-vd-blue;
+      border: 1px solid $c-accent;
+      //color: white;
+      //background-color: $c-accent;
     }
   }
 }

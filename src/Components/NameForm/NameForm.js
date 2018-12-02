@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import './NameForm.scss';
+import ReactCSSTransitionGroup from "react-addons-css-transition-group";
+import {animation} from "../../variables";
 
 class NameForm extends Component {
 
@@ -28,6 +30,12 @@ class NameForm extends Component {
 
     render() {
         return(
+            <ReactCSSTransitionGroup
+                transitionName="animation-mount"
+                transitionAppear={true}
+                transitionAppearTimeout={animation.mountAnimationDuration}
+                transitionEnter={false}
+                transitionLeave={false}>
             <form className={`NameForm ${this.props.parentClassName}`} onSubmit={this.handleSubmit}>
                 <h2>Lets add some names</h2>
                 <div className="NameForm-input-wrapper">
@@ -36,6 +44,7 @@ class NameForm extends Component {
                 </div>
                 <input className="NameForm-button-submit" type="submit" value="Submit"/>
             </form>
+            </ReactCSSTransitionGroup>
         )
     }
 }

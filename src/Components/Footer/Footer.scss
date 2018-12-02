@@ -1,0 +1,28 @@
+@import './../../variables.scss';
+
+.Footer {
+  //display: block;
+
+  position: fixed;
+  bottom: 0px;
+
+  padding: 0 5% 3px 5%;
+
+  width: 90%;
+
+  &-voter-name {
+
+    //padding: 0 $core-side-padding;
+    margin: 0;
+
+    float: right;
+    color: $c-accent;
+
+    font-style: italic;
+    font-size: 13px;
+
+    &::before {
+      content: '# ';
+    }
+  }
+}

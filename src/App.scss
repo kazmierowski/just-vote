@@ -7,15 +7,29 @@
 
   color: $c-text-colour-main;
 
-  background: #ffffff;
-  background: -moz-radial-gradient(center, ellipse cover, #ffffff 0%, #e5e5e5 100%);
-  background: -webkit-radial-gradient(center, ellipse cover, #ffffff 0%,#e5e5e5 100%);
-  background: radial-gradient(ellipse at center, #ffffff 0%,#e5e5e5 100%);
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#e5e5e5',GradientType=1 );
+  //background: #ffffff;
+  //background: -moz-radial-gradient(center, ellipse cover, #ffffff 0%, #e5e5e5 100%);
+  //background: -webkit-radial-gradient(center, ellipse cover, #ffffff 0%,#e5e5e5 100%);
+  //background: radial-gradient(ellipse at center, #ffffff 0%,#e5e5e5 100%);
+  //filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#e5e5e5',GradientType=1 );
+
+  background: $c-background-dark;
 
   &-content {
     height: 100%;
     padding: $core-padding;
     margin-top: -$header-height;
+  }
+}
+
+
+/* animations */
+
+.animation-mount-appear {
+  opacity: 0.01;
+
+  &.animation-mount-appear-active {
+    opacity: 1;
+    transition: opacity .5s ease-in;
   }
 }

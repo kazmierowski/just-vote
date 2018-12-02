@@ -21,7 +21,7 @@ class Vote extends Component {
         super(props);
 
         this.state = {
-            selectedElements: new Array(),
+            selectedElements: [],
         }
 
         this.voteClickHandler = this.voteClickHandler.bind(this);
@@ -32,7 +32,7 @@ class Vote extends Component {
 
         if (e.target.classList.contains('selected')) {
             this.setState({
-                selectedElements: this.state.selectedElements.filter(element => element != e.target.id)
+                selectedElements: this.state.selectedElements.filter(element => element !== e.target.id)
             });
 
             e.target.classList.remove('selected');

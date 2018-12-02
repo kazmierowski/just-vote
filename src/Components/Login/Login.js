@@ -5,7 +5,6 @@ import {bindActionCreators} from "redux";
 import LoginForm from "../LoginForm/LoginForm";
 import Spinner from "../Spinner/Spinner";
 import Redirect from "react-router-dom/es/Redirect";
-import {Router} from "react-router-dom";
 
 class Login extends Component {
 

@@ -3,14 +3,13 @@ import './Header.scss';
 
 class Header extends Component {
 
-
     render() {
         return(
-            <header className="Header">
+            <div className="Header">
                 <p>
                     just vote <span className="Header-version">v.0.1</span>
                 </p>
-            </header>
+            </div>
         )
     }
 }

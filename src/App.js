@@ -2,85 +2,72 @@ import React, {Component} from 'react';
 import './App.scss';
 import Menu from './Components/SideMenu/SideMenu';
 import Header from './Components/Header/Header';
-import {BrowserRouter as Router, Redirect, Route, Switch} from "react-router-dom";
-import { routes } from './router';
+import {BrowserRouter as Router, Route, Switch} from "react-router-dom";
+import {routes} from './router';
 import {connect} from "react-redux";
+import Footer from "./Components/Footer/Footer";
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
+import {animation} from './variables';
+
 
 class App extends Component {
 
     componentDidMount() {
-        window.scrollTo(0,1);
+        window.scrollTo(0, 1);
 
-        if(!this.props.loggedIn && window.location.pathname !== "/login") {
+        if (!this.props.loggedIn && window.location.pathname !== "/login") {
             console.log(window.location.href);
             window.location.href = "/login";
         }
     }
-    
+
     render() {
-        console.log('app render again');
-        let router;
-
-        if(this.props.loggedIn) {
-
-            router = (routes) => {
-                return routes.map((route, index) => (
-                    <Route
-                        key={index}
-                        path={route.path}
-                        exact={route.exact}
-                        component={route.component}
-                    />
-                ))
-            };
-        } else {
-            // router = () => {
-            //     return <Route
-            //         key={101}
-            //         path={'/login'}
-            //         exact={true}
-            //         component={Login}
-            //     />
-            // }
-
-            router = () => {return <Redirect to='/login' />}
-        }
-
+        console.log('app render');
 
         return (
 
-            <Router>
-                <div className="App" id="App-outer-container">
-                    <Menu/>
-                    <div id="App-page-wrap">
-                        <Header/>
-                        <div className="App-content">
-                            <Switch>
-                            {
-                                routes.map((route, index) => (
-                                    <Route
-                                        key={index}
-                                        path={route.path}
-                                        exact={route.exact}
-                                        component={route.component}
-                                    />
-                                ))
-                            }
-                            </Switch>
+            <ReactCSSTransitionGroup
+                transitionName="animation-mount"
+                transitionAppear={true}
+                transitionAppearTimeout={animation.mountAnimationDuration}
+                transitionEnter={false}
+                transitionLeave={false}>
+                <Router>
+                    <div className="App" id="App-outer-container">
+                        <Menu/>
+                        <div id="App-page-wrap">
+                            <Header/>
+                            <div className="App-content">
+                                <Switch>
+
+                                    {
+                                        routes.map((route, index) => (
+                                            <Route
+                                                key={index}
+                                                path={route.path}
+                                                exact={route.exact}
+                                                component={route.component}
+                                            />
+                                        ))
+                                    }
+
+                                </Switch>
+
+                            </div>
+                            <div><Footer voterName={this.props.voterName}/></div>
                         </div>
                     </div>
-                </div>
-            </Router>
+                </Router>
+            </ReactCSSTransitionGroup>
         );
     }
 }
 
 const mapStateToProps = (state) => ({
-    loggedIn: state.user.loggedIn
+    loggedIn: state.user.loggedIn,
+    voterName: state.user.name
 });
 
-const mapDispatchToProps = {
-
-};
+const mapDispatchToProps = {};
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

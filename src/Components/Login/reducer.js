@@ -1,6 +1,7 @@
 const initialState = {
     id: null,
-    loggedIn: false,
+    name: 'no one',
+    loggedIn: true,
     loading: false,
     names: [],
     colour: null,
@@ -13,18 +14,18 @@ export const userReducer = (state = initialState, action) => {
 
         case 'LOGIN_USER_STARTED':
             return {
-                ...state, loading: true
+                ...state, loading: true, name: 'loading'
             }
 
         case 'LOGIN_USER_COMPLETED':
             console.log('user login completed from reducer', action.response);
             return {
-                ...state, loggedIn: true, loading: false, id: action.response.voter.id
+                ...state, loggedIn: true, loading: false, id: action.response.voter.id, name: action.response.voter.name
             }
 
         case 'LOGIN_USER_ERROR':
             return {
-                ...state, loading: false, error: action.error.message
+                ...state, loading: false, error: action.error.message, name: 'no one'
             }
 
         default:

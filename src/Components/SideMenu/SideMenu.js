@@ -3,14 +3,25 @@
 import React, { Component } from 'react';
 import { push as Menu } from 'react-burger-menu';
 import './SideMenu.scss';
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Link } from "react-router-dom";
 import {routes} from "../../router";
 import connect from "react-redux/es/connect/connect";
 
 class SideMenu extends Component {
 
-    onClickHandler(e) {
+    constructor(props) {
+        super(props);
 
+        this.state = {
+            menuOpen: false
+        }
+    }
+
+    onClickHandler = (e) => {
+
+        this.setState({
+            menuOpen: false
+        })
     }
 
     render () {

@@ -4,9 +4,15 @@ $header-height: 40px;
 $header-padding-top: 10px;
 $header-padding-bottom: $header-padding-top;
 
+// footer
+$footer-height: 20px;
+
 // core sizes
-$core-padding: 40px 15px 0 15px;
+$core-side-padding: 15px;
+$core-padding: 40px $core-side-padding 0 $core-side-padding;
 
 // colours
-$c-text-colour-main: #3d3d3d;
+$c-background-dark: #36383C;
+$c-text-colour-main: rgb(207, 207, 207);
 $c-vd-blue: #007fa9;
+$c-accent: #f0ec68;

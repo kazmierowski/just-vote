@@ -12,7 +12,7 @@ router.post('/login', (req, res) => {
 
     let voterId = votersList.addVoter({name: req.body.name});
 
-    res.send({success: true, voter: {id: voterId}});
+    res.send({success: true, voter: {id: voterId, name: req.body.name}});
 })
 
 module.exports = router;
