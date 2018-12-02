@@ -7,13 +7,10 @@ class NameForm extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {value: ''};
-
-        this.handleChange = this.handleChange.bind(this);
-        // this.handleSubmit = this.handleSubmit.bind(this);
+        this.state = {value: '', names: []};
     }
 
-    handleChange(event) {
+    handleChange = (event) => {
         if(event.target.value !== '') {
             event.target.classList = 'not-empty';
         } else {
@@ -24,8 +21,11 @@ class NameForm extends Component {
         this.setState({value: event.target.value});
     }
 
-    handleSubmit(event) {
+    handleAdd = (event) => {
         event.preventDefault();
+        this.props.handleAddName(this.state.value);
+        this.setState({value: ''});
+
     }
 
     render() {
@@ -36,13 +36,14 @@ class NameForm extends Component {
                 transitionAppearTimeout={animation.mountAnimationDuration}
                 transitionEnter={false}
                 transitionLeave={false}>
-            <form className={`NameForm ${this.props.parentClassName}`} onSubmit={this.handleSubmit}>
+
+            <form className={`NameForm ${this.props.parentClassName}`} onSubmit={this.handleAdd}>
                 <h2>Lets add some names</h2>
                 <div className="NameForm-input-wrapper">
                     <input type="text" value={this.state.value} onChange={this.handleChange}/>
                     <label>name</label>
                 </div>
-                <input className="NameForm-button-submit" type="submit" value="Submit"/>
+                <input className="NameForm-button-submit" type="submit" value="Add" disabled={this.props.isDisabled}/>
             </form>
             </ReactCSSTransitionGroup>
         )

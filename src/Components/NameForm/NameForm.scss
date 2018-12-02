@@ -98,5 +98,11 @@
       //color: white;
       //background-color: $c-accent;
     }
+
+    &:disabled {
+      background-color: $c-background-dark;
+      border: 1px solid #6E6E6E;
+      color: #4B4725;
+    }
   }
 }

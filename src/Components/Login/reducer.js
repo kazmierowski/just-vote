@@ -1,7 +1,7 @@
 const initialState = {
     id: null,
     name: 'no one',
-    loggedIn: true,
+    loggedIn: false,
     loading: false,
     names: [],
     colour: null,
@@ -28,8 +28,17 @@ export const userReducer = (state = initialState, action) => {
                 ...state, loading: false, error: action.error.message, name: 'no one'
             }
 
+        case 'ADD_SELECTED_NAMES_COMPLETED':
+            return {
+                ...state, names: [action.names]
+            }
+
+        case 'ADD_SELECTED_NAMES_ERROR':
+            return {
+                ...state, error: action.error.message
+            }
+
         default:
             return state;
-
     }
 }

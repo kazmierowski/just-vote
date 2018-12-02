@@ -47,3 +47,32 @@ export const loginUserError = (error) => {
         error
     }
 }
+
+// Names
+
+export const addSelectedNames = (names) => {
+    return dispatch => {
+        console.log('names to be added', names);
+
+        axios.post(window.location.protocol + '//' + window.location.host + '/user/add-selected-names', names)
+            .then(
+                () => {dispatch(addSelectedNamesCompleted(names))},
+                error => {dispatch(addSelectedNamesError(error))}
+                )
+            .catch(error => {dispatch(addSelectedNamesError(error))})
+    }
+}
+
+export const addSelectedNamesCompleted = (names) => {
+    return {
+        type: 'ADD_SELECTED_NAMES_COMPLETED',
+        names: names
+    }
+}
+
+export const addSelectedNamesError = (error) => {
+    return {
+        type: 'ADD_SELECTED_NAMES_ERROR',
+        error
+    }
+}
