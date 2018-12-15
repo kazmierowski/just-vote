@@ -1,17 +1,20 @@
 import React, {Component} from 'react';
 import './Vote.scss';
 import NamesList from "../NamesList/NamesList";
+import {animation} from "../../variables";
+import ReactCSSTransitionGroup from "react-addons-css-transition-group";
+import connect from "react-redux/es/connect/connect";
+import {bindActionCreators} from "redux";
+import {addSelectedNames, isAppWaiting} from "../../actions";
 
-const testList = ['biology', 'binnacles', 'boby', 'bingo', 'banana', 'biscuit', 'butter', 'bug', 'bar'];
+const testList = ['biology', 'binnacles', 'boby', 'bingo', 'banana', 'biscuit', 'butter', 'bug', 'bar', 'biology', 'binnacles', 'boby', 'bingo', 'banana', 'biscuit', 'butter'];
 
 class Vote extends Component {
 
     constructor(props) {
         super(props);
 
-        this.state = {
-            selectedElements: [],
-        }
+        props.isAppWaiting();
     }
 
     voteClickHandler = (e) => {
@@ -42,10 +45,43 @@ class Vote extends Component {
     }
 
     render() {
-        return (
-            <NamesList className="Vote" names={testList} where="vote" onClickHandler={this.voteClickHandler}/>
-        )
+        if(this.props.app.waiting) {
+            return (
+                <ReactCSSTransitionGroup
+                    transitionName="animation-mount"
+                    transitionAppear={true}
+                    transitionAppearTimeout={animation.mountAnimationDuration}
+                    transitionEnter={false}
+                    transitionLeave={false}>
+
+                    <div className="Vote-waiting">
+                        <p>Waiting for other users</p>
+                    </div>
+
+                </ReactCSSTransitionGroup>
+            )
+        } else {
+            return (
+                <ReactCSSTransitionGroup
+                    transitionName="animation-mount"
+                    transitionAppear={true}
+                    transitionAppearTimeout={animation.mountAnimationDuration}
+                    transitionEnter={false}
+                    transitionLeave={false}>
+                    <NamesList className="Vote" names={testList} where="vote" onClickHandler={this.voteClickHandler}/>
+                </ReactCSSTransitionGroup>
+            )
+        }
+
     }
 }
 
-export default Vote;
+const mapStateToProps = (state) => ({
+    app: state.app
+});
+
+const mapDispatchToProps = dispatch => {
+    return bindActionCreators({isAppWaiting: isAppWaiting}, dispatch);
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Vote);

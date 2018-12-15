@@ -1,14 +1,20 @@
-const initialState = {
+const initialUserState = {
     id: null,
     name: 'no one',
     loggedIn: false,
     loading: false,
     names: [],
     colour: null,
-    error: null
+    error: null,
+    isReady: false
 }
 
-export const userReducer = (state = initialState, action) => {
+const initialAppState = {
+    waiting: false,
+    loading: false
+}
+
+export const userReducer = (state = initialUserState, action) => {
 
     switch (action.type) {
 
@@ -37,6 +43,37 @@ export const userReducer = (state = initialState, action) => {
             return {
                 ...state, error: action.error.message
             }
+
+        case 'USER_READY':
+            return {
+                ...state, isReady: true
+            }
+
+        default:
+            return state;
+    }
+}
+
+export const appReducer = (state = initialAppState, action) => {
+
+    switch (action.type) {
+
+        case 'APP_READY':
+            return {
+                ...state, waiting: false
+            }
+
+        case 'IS_APP_WAITING_START':
+            return {
+                ...state, loading: true
+            }
+
+        case 'IS_APP_WAITING_COMPLETED':
+            console.log('app waiting complete', action.isWaiting);
+            return {
+                ...state, waiting: action.isWaiting, loading: false
+            }
+
 
         default:
             return state;

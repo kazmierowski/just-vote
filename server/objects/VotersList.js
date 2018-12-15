@@ -50,6 +50,13 @@ class VotersList {
                 this.votersSelectedNames.push(nameObject);
 
                 this.voters[voterId].addName(nameObject);
+
+                if(this.voters[voterId].getNames().length === 2) {
+                    this.voters[voterId].setIsReady(true);
+                } else {
+                    this.voters[voterId].setIsReady(false);
+                }
+
                 resolve({success: true, names: this.voters[voterId].getNames()});
 
             } else {
@@ -66,6 +73,20 @@ class VotersList {
     getNameId() {
         this.nameId++;
         return this.nameId;
+    }
+
+    checkIfAllUsersReady() {
+
+        return new Promise((resolve, reject) => {
+            for(let voter in this.voters) {
+
+                if(!this.voters[voter].getIsReady()) {
+                    resolve({areReady: false})
+                }
+            }
+
+            resolve({areReady: true})
+        })
     }
 }
 

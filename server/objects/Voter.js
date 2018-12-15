@@ -5,6 +5,7 @@ class Voter {
         this.id = id;
         this.name = name;
         this.names = names;
+        this.isReady = false;
     }
 
     addName(name) {
@@ -21,6 +22,14 @@ class Voter {
 
     getId() {
         return this.id;
+    }
+
+    getIsReady() {
+        return this.isReady;
+    }
+
+    setIsReady(isReady) {
+        this.isReady = isReady;
     }
 }
 

@@ -13,12 +13,12 @@ export const loginUser = (credentials) => {
             .then(res => {
                 setTimeout(() => { // for smoothness
                     dispatch(loginUserCompleted(res.data))
-                }, 2000)
+                }, 1000)
             })
             .catch(error => {
                 setTimeout(() => { // for smoothness
                     dispatch(loginUserError(error))
-                }, 2000)
+                }, 1000)
             })
 
         // for offline testing
@@ -75,5 +75,56 @@ export const addSelectedNamesError = (error) => {
     return {
         type: 'ADD_SELECTED_NAMES_ERROR',
         error
+    }
+}
+
+// User ready
+export const userReady = () => {
+    return {
+        type: 'USER_READY'
+    }
+}
+
+// App
+export const isAppWaiting = () => {
+
+    return dispatch => {
+
+        console.log('is app waiting start');
+
+        dispatch(isAppWaitingStart());
+
+        axios.post(window.location.protocol + '//' + window.location.host + '/app/is-waiting')
+            .then(res => {
+                dispatch(isAppWaitingCompleted(res.data.app.isWaiting))
+            })
+            .catch(error => {
+                dispatch(isAppWaitingError(error))
+            })
+
+        // for offline testing
+        // setTimeout(() => {
+        //     dispatch(loginUserCompleted({success: true}))
+        // }, 2000);
+    }
+}
+
+export const isAppWaitingStart = () => {
+    return {
+        type: 'IS_APP_WAITING_START'
+    }
+}
+
+export const isAppWaitingCompleted = (isWaiting) => {
+    return {
+        type: 'IS_APP_WAITING_COMPLETED',
+        isWaiting: isWaiting
+    }
+}
+
+export const isAppWaitingError = (error) => {
+    return {
+        type: 'IS_APP_WAITING_ERROR',
+        error: error
     }
 }

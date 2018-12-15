@@ -22,13 +22,13 @@ export default function NamesList(props) {
     } else if(props.where === 'vote') {
         console.log('goes with vote theme');
         return (
-            <ul className='Vote NamesList'>
+            <FlipMove typeName="ul" className="Vote NamesList">
                 {
                     props.names.map((name, index) =>
                         <li className="NamesList-element" key={index} id={index} onClick={props.onClickHandler}>{name}</li>
                     )
                 }
-            </ul>
+            </FlipMove>
         )
     } else {
         console.log('else');

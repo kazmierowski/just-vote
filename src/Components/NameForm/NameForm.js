@@ -37,13 +37,13 @@ class NameForm extends Component {
                 transitionEnter={false}
                 transitionLeave={false}>
 
-            <form className={`NameForm ${this.props.parentClassName}`} onSubmit={this.handleAdd}>
+            <form className={`NameForm ${this.props.parentClassName}`} onSubmit={this.props.isFull ? this.props.handleContinue : this.handleAdd}>
                 <h2>Lets add some names</h2>
                 <div className="NameForm-input-wrapper">
                     <input type="text" value={this.state.value} onChange={this.handleChange}/>
                     <label>name</label>
                 </div>
-                <input className="NameForm-button-submit" type="submit" value="Add" disabled={this.props.isDisabled}/>
+                <input className="NameForm-button-submit" type="submit" value={this.props.isFull ? "Continue" : "Add"}/>
             </form>
             </ReactCSSTransitionGroup>
         )

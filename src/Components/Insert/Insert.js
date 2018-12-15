@@ -1,33 +1,22 @@
 import React, { Component } from 'react';
 import NameForm from "../NameForm/NameForm";
-import {addSelectedNames} from "../../actions";
+import {addSelectedNames, userReady} from "../../actions";
 import {bindActionCreators} from "redux";
 import connect from "react-redux/es/connect/connect";
 import NamesList from "../NamesList/NamesList";
 import './Insert.scss';
+import {withRouter} from "react-router-dom";
 
 class Insert extends Component {
 
     constructor(props) {
         super(props);
 
-        // this.state = {
-        //     names: []
-        // };
     }
 
     handleAddName = (name) => {
-
-        console.log(this.props.user.names.length);
-        console.log(this.props.user.names);
-        console.log(this.props.user);
-
         if(this.props.userNames.length < 2 && name !== '') {
             this.props.addSelectedNames(name);
-
-            // this.setState((prevState) => ({
-            //     names: [...prevState.names, name]
-            // }));
         }
     }
 
@@ -35,11 +24,16 @@ class Insert extends Component {
 
     }
 
+    handleContinue = () => {
+        this.props.userReady();
+        this.props.history.push("vote");
+    }
+
     render() {
         return(
             <div className="Insert">
                 <NamesList where="insert" names={this.props.userNames}/>
-                <NameForm parentClassName="Insert-form" handleAddName={this.handleAddName} isDisabled={this.props.userNames.length >= 2}/>
+                <NameForm parentClassName="Insert-form" handleAddName={this.handleAddName} handleContinue={this.handleContinue} isFull={this.props.userNames.length >= 2}/>
             </div>
         )
     }
@@ -47,11 +41,12 @@ class Insert extends Component {
 
 const mapStateToProps = (state) => ({
     user: state.user,
-    userNames: state.user.names
+    userNames: state.user.names,
+    userReady: state.user.isReady
 });
 
 const mapDispatchToProps = dispatch => {
-    return bindActionCreators({addSelectedNames: addSelectedNames}, dispatch);
+    return bindActionCreators({addSelectedNames: addSelectedNames, userReady: userReady}, dispatch);
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Insert);
