@@ -12,19 +12,20 @@ router.post('/login', (req, res) => {
     res.send({success: true, voter: {id: voterId, name: req.body.name}});
 })
 
-router.post('add-selected-names', (req, res) => {
+router.post('/add-selected-names', (req, res) => {
     console.log('body from add-selected-names', req.body);
 
 
-    votersList.addVotersSelectedNames(req.cookies.voter.id, req.body.names).then(
-        () => {
+    votersList.addVotersSelectedName(req.cookies.voter.id, req.body.names).then(
+        (data) => {
             console.log('send response');
-            res.send({success: true, message: 'Names added'})
-        },
-        (error) => {
+            console.log(data);
+            res.send({success: data.success, message: 'Names added', names: data.names})
+        })
+        .catch((error) => {
+            console.log('error lol');
             res.send(error)
-        }
-    )
+    })
 })
 
 module.exports = router;

@@ -30,7 +30,7 @@ export const userReducer = (state = initialState, action) => {
 
         case 'ADD_SELECTED_NAMES_COMPLETED':
             return {
-                ...state, names: [action.names]
+                ...state, names: action.names
             }
 
         case 'ADD_SELECTED_NAMES_ERROR':

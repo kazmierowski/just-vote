@@ -54,9 +54,9 @@ export const addSelectedNames = (names) => {
     return dispatch => {
         console.log('names to be added', names);
 
-        axios.post(window.location.protocol + '//' + window.location.host + '/user/add-selected-names', names)
+        axios.post(window.location.protocol + '//' + window.location.host + '/user/add-selected-names', {'names': names})
             .then(
-                () => {dispatch(addSelectedNamesCompleted(names))},
+                res => {console.log(res); dispatch(addSelectedNamesCompleted(res.data.names))},
                 error => {dispatch(addSelectedNamesError(error))}
                 )
             .catch(error => {dispatch(addSelectedNamesError(error))})

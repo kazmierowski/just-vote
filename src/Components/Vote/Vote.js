@@ -1,19 +1,8 @@
 import React, {Component} from 'react';
 import './Vote.scss';
+import NamesList from "../NamesList/NamesList";
 
 const testList = ['biology', 'binnacles', 'boby', 'bingo', 'banana', 'biscuit', 'butter', 'bug', 'bar'];
-
-const VotingList = (props) => (
-
-    <ul className="Vote-select">
-        {
-            props.listOfNames.map((name, index) => (
-                <li key={index} type="checkbox" id={index} className="Vote-select-element"
-                    onClick={props.onClickHandler}>{name}</li>
-            ))
-        }
-    </ul>
-)
 
 class Vote extends Component {
 
@@ -23,11 +12,10 @@ class Vote extends Component {
         this.state = {
             selectedElements: [],
         }
-
-        this.voteClickHandler = this.voteClickHandler.bind(this);
     }
 
-    voteClickHandler(e) {
+    voteClickHandler = (e) => {
+
         let targetId = e.target.id;
 
         if (e.target.classList.contains('selected')) {
@@ -55,9 +43,7 @@ class Vote extends Component {
 
     render() {
         return (
-            <div className="Vote">
-                <VotingList listOfNames={testList} onClickHandler={this.voteClickHandler}/>
-            </div>
+            <NamesList className="Vote" names={testList} where="vote" onClickHandler={this.voteClickHandler}/>
         )
     }
 }

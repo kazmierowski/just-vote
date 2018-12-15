@@ -1,12 +1,16 @@
 .Insert {
 
+  .NamesList {
+    min-height: 110px;
+  }
+
   .Insert-form {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: normal;
     text-align: center;
-    min-height: 90vh;
+    //min-height: 90vh;
 
   }
 }

@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux';
 import { menuReducer } from './Components/SideMenu/reducers';
 import { readyToVote, namesReducer, participantsReducer } from './mainReducer';
-import { userReducer } from "./Components/Login/reducer";
+import { userReducer } from "./reducer";
 
 export default combineReducers({
     menu: menuReducer,

@@ -7,6 +7,10 @@ class Voter {
         this.names = names;
     }
 
+    addName(name) {
+        this.names.push(name);
+    }
+
     getName() {
         return this.name;
     }

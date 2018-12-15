@@ -1,4 +1,5 @@
 let Voter = require('./Voter');
+let Name = require('./Name');
 let instance = null;
 
 class VotersList {
@@ -12,6 +13,7 @@ class VotersList {
         this.votersSelectedNames = [];
         this.voters = {};
         this.voterId = 0;
+        this.nameId = 0;
 
         return instance;
     }
@@ -26,7 +28,6 @@ class VotersList {
 
         this.addNameToVotersNames(user.name);
 
-        console.log(this.voters);
         return id;
     }
 
@@ -38,18 +39,17 @@ class VotersList {
         return this.votersSelectedNames;
     }
 
-    addVotersSelectedNames(voterId, names) {
+    addVotersSelectedName(voterId, name) {
 
         return new Promise((resolve, reject) => {
 
-            if(this.voters[voterId]) {
-                console.log('names added:', names);
-                names.forEach((name) => {
-                    this.votersSelectedNames.push(name);
-                })
+            if(this.voters[voterId] instanceof Voter) {
 
-                this.voters[voterId].names = names;
-                resolve({success: true});
+                this.votersSelectedNames.push(new Name(this.getNameId(), name))
+
+                this.voters[voterId].addName(name);
+                resolve({success: true, names: this.voters[voterId].getNames()});
+
             } else {
                 reject({success: false, message: 'Voter with this ID do not exist'});
             }
@@ -59,6 +59,11 @@ class VotersList {
     getVoterId() {
         this.voterId++;
         return this.voterId;
+    }
+
+    getNameId() {
+        this.nameId++;
+        return this.nameId;
     }
 }
 
