@@ -14,7 +14,7 @@ export default function NamesList(props) {
             <FlipMove typeName="ul" className="Insert NamesList">
                 {
                     props.names.map((name, index) =>
-                        <li className="NamesList-element" key={index}>{name}</li>
+                        <li className="NamesList-element" key={name.id}>{name.value}</li>
                     )
                 }
             </FlipMove>

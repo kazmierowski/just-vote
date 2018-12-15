@@ -64,6 +64,7 @@ export const addSelectedNames = (names) => {
 }
 
 export const addSelectedNamesCompleted = (names) => {
+    console.log(names);
     return {
         type: 'ADD_SELECTED_NAMES_COMPLETED',
         names: names

@@ -45,9 +45,11 @@ class VotersList {
 
             if(this.voters[voterId] instanceof Voter) {
 
-                this.votersSelectedNames.push(new Name(this.getNameId(), name))
+                let nameObject = new Name(this.getNameId(), name);
 
-                this.voters[voterId].addName(name);
+                this.votersSelectedNames.push(nameObject);
+
+                this.voters[voterId].addName(nameObject);
                 resolve({success: true, names: this.voters[voterId].getNames()});
 
             } else {
