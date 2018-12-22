@@ -128,3 +128,41 @@ export const isAppWaitingError = (error) => {
         error: error
     }
 }
+
+// Names
+export const getAllNames = () => {
+
+    return dispatch => {
+
+        console.log('get all names start');
+
+        dispatch(getAllNamesStart());
+
+        axios.post(window.location.protocol + '//' + window.location.host + '/names/get-all')
+            .then(res => {
+                console.log('names from action', res.data.names);
+                dispatch(getAllNamesCompleted(res.data.names))
+            })
+            .catch(error => {
+                console.log('get all names error', error);
+            })
+
+        // for offline testing
+        // setTimeout(() => {
+        //     dispatch(loginUserCompleted({success: true}))
+        // }, 2000);
+    }
+}
+
+export const getAllNamesStart = () => {
+    return {
+        type: 'GET_ALL_NAMES_START'
+    }
+}
+
+export const getAllNamesCompleted = (names) => {
+    return {
+        type: 'GET_ALL_NAMES_COMPLETED',
+        names: names
+    }
+}

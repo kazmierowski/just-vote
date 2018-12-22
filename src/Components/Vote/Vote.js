@@ -5,7 +5,7 @@ import {animation} from "../../variables";
 import ReactCSSTransitionGroup from "react-addons-css-transition-group";
 import connect from "react-redux/es/connect/connect";
 import {bindActionCreators} from "redux";
-import {addSelectedNames, isAppWaiting} from "../../actions";
+import {addSelectedNames, isAppWaiting, getAllNames} from "../../actions";
 
 const testList = ['biology', 'binnacles', 'boby', 'bingo', 'banana', 'biscuit', 'butter', 'bug', 'bar', 'biology', 'binnacles', 'boby', 'bingo', 'banana', 'biscuit', 'butter'];
 
@@ -15,6 +15,7 @@ class Vote extends Component {
         super(props);
 
         props.isAppWaiting();
+        props.getAllNames();
     }
 
     voteClickHandler = (e) => {
@@ -32,7 +33,6 @@ class Vote extends Component {
                 this.setState(prevState => ({
                     selectedElements: [...prevState.selectedElements, targetId]
                 }))
-
                 e.target.classList.add('selected');
             } else {
                 // handler for displaying information about already max amount of selected elements
@@ -68,20 +68,20 @@ class Vote extends Component {
                     transitionAppearTimeout={animation.mountAnimationDuration}
                     transitionEnter={false}
                     transitionLeave={false}>
-                    <NamesList className="Vote" names={testList} where="vote" onClickHandler={this.voteClickHandler}/>
+                    <NamesList className="Vote" names={this.props.names.list} where="vote" onClickHandler={this.voteClickHandler}/>
                 </ReactCSSTransitionGroup>
             )
         }
-
     }
 }
 
 const mapStateToProps = (state) => ({
-    app: state.app
+    app: state.app,
+    names: state.names
 });
 
 const mapDispatchToProps = dispatch => {
-    return bindActionCreators({isAppWaiting: isAppWaiting}, dispatch);
+    return bindActionCreators({isAppWaiting: isAppWaiting, getAllNames: getAllNames}, dispatch);
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Vote);

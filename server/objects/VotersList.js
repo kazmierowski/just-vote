@@ -10,7 +10,7 @@ class VotersList {
             instance = this;
         }
         this.votersNames = [];
-        this.votersSelectedNames = [];
+        this.votersSelectedNames = {};
         this.voters = {};
         this.voterId = 0;
         this.nameId = 0;
@@ -45,9 +45,11 @@ class VotersList {
 
             if(this.voters[voterId] instanceof Voter) {
 
-                let nameObject = new Name(this.getNameId(), name);
+                let nameId = this.getNameId();
 
-                this.votersSelectedNames.push(nameObject);
+                let nameObject = new Name(nameId, name);
+
+                this.votersSelectedNames[nameId] = nameObject;
 
                 this.voters[voterId].addName(nameObject);
 
@@ -73,6 +75,14 @@ class VotersList {
     getNameId() {
         this.nameId++;
         return this.nameId;
+    }
+
+    addVote(nameId) {
+        return this.votersSelectedNames[nameId].addVote();
+    }
+
+    removeVote(nameId) {
+        return this.votersSelectedNames[nameId].removeVote();
     }
 
     checkIfAllUsersReady() {

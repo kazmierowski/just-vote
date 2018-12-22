@@ -10,6 +10,7 @@ const cookieParser = require('cookie-parser')
 
 const userRouter = require('./routes/user');
 const appRouter = require('./routes/app');
+const namesRouter = require('./routes/names');
 
 let votersList = new vl();
 
@@ -42,6 +43,7 @@ server.get('/login', function (req, res) {
 
 server.use('/user', userRouter);
 server.use('/app', appRouter);
+server.use('/names', namesRouter);
 
 portFinder.getPortPromise()
     .then((port) => {

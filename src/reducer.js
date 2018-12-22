@@ -14,6 +14,11 @@ const initialAppState = {
     loading: false
 }
 
+const initialNamesState = {
+    list: [],
+    loading: false
+}
+
 export const userReducer = (state = initialUserState, action) => {
 
     switch (action.type) {
@@ -78,4 +83,24 @@ export const appReducer = (state = initialAppState, action) => {
         default:
             return state;
     }
+}
+
+export const namesReducer = (state = initialNamesState, action) => {
+
+    switch (action.type) {
+
+        case 'GET_ALL_NAMES_START':
+            return {
+                ...state, loading: true
+            }
+
+        case 'GET_ALL_NAMES_COMPLETED':
+            return {
+                ...state, loading: false, list: action.names
+            }
+
+        default:
+            return state;
+    }
+
 }

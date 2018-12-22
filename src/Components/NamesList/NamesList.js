@@ -1,8 +1,6 @@
 import React from 'react';
 import './NamesList.scss';
 import FlipMove from 'react-flip-move';
-import {animation} from "../../variables";
-import ReactCSSTransitionGroup from "react-addons-css-transition-group";
 
 export default function NamesList(props) {
 
@@ -20,12 +18,12 @@ export default function NamesList(props) {
             </FlipMove>
         )
     } else if(props.where === 'vote') {
-        console.log('goes with vote theme');
+
         return (
             <FlipMove typeName="ul" className="Vote NamesList">
                 {
-                    props.names.map((name, index) =>
-                        <li className="NamesList-element" key={index} id={index} onClick={props.onClickHandler}>{name}</li>
+                    Object.keys(props.names).map((nameId, index) =>
+                        <li className="NamesList-element" key={index} id={props.names[nameId].id} onClick={props.onClickHandler}>{props.names[nameId].value}</li>
                     )
                 }
             </FlipMove>
