@@ -78,11 +78,11 @@ class VotersList {
     }
 
     addVote(nameId) {
-        return this.votersSelectedNames[nameId].addVote();
+        return {votesCount: this.votersSelectedNames[nameId].addVote(), id: nameId};
     }
 
     removeVote(nameId) {
-        return this.votersSelectedNames[nameId].removeVote();
+        return {votesCount: this.votersSelectedNames[nameId].removeVote(), id: nameId};
     }
 
     checkIfAllUsersReady() {

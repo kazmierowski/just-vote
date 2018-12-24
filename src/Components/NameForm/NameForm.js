@@ -25,7 +25,6 @@ class NameForm extends Component {
         event.preventDefault();
         this.props.handleAddName(this.state.value);
         this.setState({value: ''});
-
     }
 
     render() {
@@ -40,7 +39,7 @@ class NameForm extends Component {
             <form className={`NameForm ${this.props.parentClassName}`} onSubmit={this.props.isFull ? this.props.handleContinue : this.handleAdd}>
                 <h2>Lets add some names</h2>
                 <div className="NameForm-input-wrapper">
-                    <input type="text" value={this.state.value} onChange={this.handleChange}/>
+                    <input type="text" value={this.state.value} onChange={this.handleChange} disabled={this.props.isFull ? true : false}/>
                     <label>name</label>
                 </div>
                 <input className="NameForm-button-submit" type="submit" value={this.props.isFull ? "Continue" : "Add"}/>

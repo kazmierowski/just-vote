@@ -166,3 +166,40 @@ export const getAllNamesCompleted = (names) => {
         names: names
     }
 }
+
+export const voteForName = (nameId, option) => {
+
+    return dispatch => {
+
+        console.log('vote for name start');
+
+        dispatch(voteForNameStart());
+
+        axios.post(window.location.protocol + '//' + window.location.host + '/names/vote', {nameId: nameId, option: option})
+            .then(res => {
+                dispatch(voteForNameCompleted(res.data.voteResponse))
+                console.log('response: ', res.data.voteResponse)
+            })
+            .catch(error => {
+                console.log('vote for name error', error);
+            })
+
+        // for offline testing
+        // setTimeout(() => {
+        //     dispatch(loginUserCompleted({success: true}))
+        // }, 2000);
+    }
+}
+
+export const voteForNameStart = () => {
+    return {
+        type: 'VOTE_FOR_NAME_START'
+    }
+}
+
+export const voteForNameCompleted = (voteResponse) => {
+    return {
+        type: 'VOTE_FOR_NAME_COMPLETED',
+        voteResponse: voteResponse
+    }
+}

@@ -99,6 +99,23 @@ export const namesReducer = (state = initialNamesState, action) => {
                 ...state, loading: false, list: action.names
             }
 
+        case 'VOTE_FOR_NAME_START':
+            return {
+                ...state, loading: true
+            }
+
+        case 'VOTE_FOR_NAME_COMPLETED':
+
+            let newState = Object.assign({}, state);
+
+            newState.list[action.voteResponse.id].votesCount = action.voteResponse.votesCount;
+
+
+            return {
+                ...state, loading: false, list: newState.list
+            }
+
+
         default:
             return state;
     }
