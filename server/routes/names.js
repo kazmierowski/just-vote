@@ -3,6 +3,7 @@ let express = require ('express');
 
 let router = express.Router();
 let votersList = new vl();
+const socket = require('../socket').getInstance();
 
 router.post('/get-all', (req, res) => {
     res.send({names: votersList.getAllVotersSelectedNames()});
@@ -15,7 +16,14 @@ router.post('/vote', (req, res) => {
         console.log('add vote router');
 
         let votesCountResponse = votersList.addVote(req.body.nameId);
-        console.log('count: ', votesCountResponse.votesCount);
+
+        if(votersList.getAllVotesCount() === (votersList.getAllVotersNames().length * 2)) {
+            setTimeout(() => {
+                if(votersList.getAllVotesCount() === (votersList.getAllVotersNames().length * 2)) {
+                    socket.emit('end-of-vote');
+                }
+            }, 5000)
+        }
 
         res.send({success: true, voteResponse: votesCountResponse});
     } else {

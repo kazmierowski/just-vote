@@ -8,7 +8,9 @@ import {connect} from "react-redux";
 import Footer from "./Components/Footer/Footer";
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import {animation} from './variables';
-
+import socket from './socket';
+import { bindActionCreators } from 'redux';
+import { allVotersReady, getAllNames } from './actions';
 
 class App extends Component {
 
@@ -19,6 +21,19 @@ class App extends Component {
             console.log(window.location.href);
             window.location.href = "/login";
         }
+
+        socket.on('all-voters-ready', () => { 
+            this.props.getAllNames();
+            this.props.allVotersReady();
+        })
+
+        socket.on('new-voter', (data) => {
+            console.log('new user logged in:', data.votersCount);
+        })
+
+        socket.on('end-of-vote', () => {
+            console.log('END OF VOTE');
+        })
     }
 
     render() {
@@ -68,6 +83,8 @@ const mapStateToProps = (state) => ({
     voterName: state.user.name
 });
 
-const mapDispatchToProps = {};
+const mapDispatchToProps = dispatch => {
+    return bindActionCreators({allVotersReady: allVotersReady, getAllNames: getAllNames}, dispatch);
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

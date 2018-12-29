@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import './LoginForm.scss';
+import socket from './../../socket';
 
 class LoginForm extends Component {
 
@@ -24,7 +25,7 @@ class LoginForm extends Component {
 
     handleSubmit = (event) => {
         event.preventDefault();
-
+        
         this.props.onSubmit({name: this.state.nameValue, password: this.state.passwordValue});
     }
 

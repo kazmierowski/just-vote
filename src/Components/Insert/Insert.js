@@ -9,11 +9,6 @@ import {withRouter} from "react-router-dom";
 
 class Insert extends Component {
 
-    constructor(props) {
-        super(props);
-
-    }
-
     handleAddName = (name) => {
         if(this.props.userNames.length < 2 && name !== '') {
             this.props.addSelectedNames(name);

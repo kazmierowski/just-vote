@@ -14,6 +14,7 @@ class VotersList {
         this.voters = {};
         this.voterId = 0;
         this.nameId = 0;
+        this.allVotesCount = 0;
 
         return instance;
     }
@@ -23,12 +24,18 @@ class VotersList {
     }
 
     addVoter(user) {
-        let id = this.getVoterId();
-        this.voters[id] = new Voter(id, user.name);
 
-        this.addNameToVotersNames(user.name);
-
-        return id;
+        return new Promise((resolve, reject) => {
+            let id = this.getVoterId();
+            this.voters[id] = new Voter(id, user.name);
+    
+            this.addNameToVotersNames(user.name);
+    
+            resolve(id);
+            // console.log('voters from add voter:', this.voters);
+        })
+        
+        // return id;
     }
 
     getAllVotersNames() {
@@ -41,6 +48,7 @@ class VotersList {
 
     addVotersSelectedName(voterId, name) {
 
+        console.log('add voters selected name id', voterId);
         return new Promise((resolve, reject) => {
 
             if(this.voters[voterId] instanceof Voter) {
@@ -78,10 +86,12 @@ class VotersList {
     }
 
     addVote(nameId) {
+        this.allVotesCount = this.allVotesCount + 1;
         return {votesCount: this.votersSelectedNames[nameId].addVote(), id: nameId};
     }
 
     removeVote(nameId) {
+        this.allVotesCount = this.allVotesCount - 1;
         return {votesCount: this.votersSelectedNames[nameId].removeVote(), id: nameId};
     }
 
@@ -97,6 +107,14 @@ class VotersList {
 
             resolve({areReady: true})
         })
+    }
+
+    getUsersCount() {
+        return this.votersNames.length;
+    }
+
+    getAllVotesCount() {
+        return this.allVotesCount;
     }
 }
 

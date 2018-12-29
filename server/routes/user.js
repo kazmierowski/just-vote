@@ -3,13 +3,20 @@ let express = require ('express');
 
 let router = express.Router();
 let votersList = new vl();
+const socket = require('../socket').getInstance();
 
 router.post('/login', (req, res) => {
 
-    let voterId = votersList.addVoter({name: req.body.name});
+    votersList.addVoter({name: req.body.name}).then(
+        (id) => {
+            res.cookie('voter', {id: id});
+            res.send({success: true, voter: {id: id, name: req.body.name}});
 
-    res.cookie('voter', {id: voterId});
-    res.send({success: true, voter: {id: voterId, name: req.body.name}});
+            socket.emit('new-voter', {name: req.body.name, id: id, votersCount: votersList.getAllVotersNames().length})
+        }
+    ).catch((error) => {
+        res.send(error);
+    })
 })
 
 router.post('/add-selected-names', (req, res) => {

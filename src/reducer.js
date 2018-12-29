@@ -11,6 +11,7 @@ const initialUserState = {
 
 const initialAppState = {
     waiting: false,
+    afterVote: false,
     loading: false
 }
 
@@ -77,6 +78,11 @@ export const appReducer = (state = initialAppState, action) => {
             console.log('app waiting complete', action.isWaiting);
             return {
                 ...state, waiting: action.isWaiting, loading: false
+            }
+
+        case 'ALL_VOTERS_READY':
+            return {
+                ...state, waiting: false
             }
 
 

@@ -3,9 +3,11 @@ let pathJoin = require('path.join');
 let bodyParser = require('body-parser');
 let vl = require('./objects/VotersList');
 
-const server = express();
-const ws = require('express-ws')(server);
-const portFinder = require('portfinder');
+const app = express();
+const server = require('http').Server(app);
+const webSocket = require('./socket').socket(server);
+
+// const portFinder = require('portfinder');
 const cookieParser = require('cookie-parser')
 
 const userRouter = require('./routes/user');
@@ -14,17 +16,17 @@ const namesRouter = require('./routes/names');
 
 let votersList = new vl();
 
-server.use(cookieParser());
+app.use(cookieParser());
 
-server.use(bodyParser.urlencoded({
+app.use(bodyParser.urlencoded({
     extended: true
 }));
 
-server.use(bodyParser.json());
+app.use(bodyParser.json());
 
-server.use(express.static(pathJoin(__dirname, '../build')));
+app.use(express.static(pathJoin(__dirname, '../build')));
 
-server.get('/', function (req, res) {
+app.get('/', function (req, res) {
 
     res.sendFile(pathJoin(__dirname, '../build/index.html'), (err) => {
         res.end();
@@ -33,7 +35,7 @@ server.get('/', function (req, res) {
     });
 })
 
-server.get('/login', function (req, res) {
+app.get('/login', function (req, res) {
     res.sendFile(pathJoin(__dirname, '../build/index.html'), (err) => {
         res.end();
 
@@ -41,17 +43,21 @@ server.get('/login', function (req, res) {
     });
 })
 
-server.use('/user', userRouter);
-server.use('/app', appRouter);
-server.use('/names', namesRouter);
+app.use('/user', userRouter);
+app.use('/app', appRouter);
+app.use('/names', namesRouter);
 
-portFinder.getPortPromise()
-    .then((port) => {
-        server.listen(port, () => console.log(`Example app listening on port ${port}!`));
-    })
-    .catch((err) => {
-        console.log('I could not find empty port');
-    });
+let port = 8000;
+
+server.listen(port, () => console.log(`Example app listening on port ${port}!`));
+
+// portFinder.getPortPromise()
+//     .then((port) => {
+//         app.listen(port, () => console.log(`Example app listening on port ${port}!`));
+//     })
+//     .catch((err) => {
+//         console.log('I could not find empty port');
+//     });
 
 
 

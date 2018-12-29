@@ -129,6 +129,13 @@ export const isAppWaitingError = (error) => {
     }
 }
 
+export const allVotersReady = () => {
+
+    return {
+        type: 'ALL_VOTERS_READY'
+    }
+}
+
 // Names
 export const getAllNames = () => {
 

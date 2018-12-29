@@ -15,7 +15,6 @@ class Vote extends Component {
         super(props);
 
         props.isAppWaiting();
-        props.getAllNames();
 
         this.state = {
             selectedNamesCount: 0
@@ -26,11 +25,7 @@ class Vote extends Component {
 
         console.log('Vote class click handler')
 
-        let targetId = e.target.id;
-
         if (e.target.classList.contains('selected')) {
-
-            console.log('unselect vote');
 
             this.props.voteForName(e.target.id, 'remove');
 
@@ -43,7 +38,6 @@ class Vote extends Component {
 
             if (this.state.selectedNamesCount < 2) {
 
-                console.log('selected name id:', e.target.id);
                 this.props.voteForName(e.target.id, 'add');
                 e.target.classList.add('selected');
 
@@ -78,16 +72,24 @@ class Vote extends Component {
                 </ReactCSSTransitionGroup>
             )
         } else {
-            return (
-                <ReactCSSTransitionGroup
-                    transitionName="animation-mount"
-                    transitionAppear={true}
-                    transitionAppearTimeout={animation.mountAnimationDuration}
-                    transitionEnter={false}
-                    transitionLeave={false}>
-                    <NamesList className="Vote" names={this.props.names.list} where="vote" onClickHandler={this.voteClickHandler}/>
-                </ReactCSSTransitionGroup>
-            )
+
+            if(this.props.app.afterVote) {
+                return (
+                    <div>The winner is:</div>
+                )
+
+            } else {
+                return (
+                    <ReactCSSTransitionGroup
+                        transitionName="animation-mount"
+                        transitionAppear={true}
+                        transitionAppearTimeout={animation.mountAnimationDuration}
+                        transitionEnter={false}
+                        transitionLeave={false}>
+                        <NamesList className="Vote" names={this.props.names.list} where="vote" onClickHandler={this.voteClickHandler}/>
+                    </ReactCSSTransitionGroup>
+                )
+            }
         }
     }
 }
