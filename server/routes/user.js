@@ -30,4 +30,15 @@ router.post('/add-selected-names', (req, res) => {
     })
 })
 
+router.post('/ready', (req, res) => {
+
+    votersList.setUserReady(req.body.isReady, req.cookies.voter.id).then(
+        (data) => {
+            res.send({success: true, isReady: data.isReady});
+        })
+        .catch((error) => {
+            console.log(error);
+        })
+})
+
 module.exports = router;

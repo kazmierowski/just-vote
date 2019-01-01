@@ -3,6 +3,7 @@ import Home from "./Components/Home/Home";
 import About from "./Components/About/About";
 import Vote from "./Components/Vote/Vote";
 import Login from "./Components/Login/Login";
+import Result from './Components/Result/Result';
 
 export const routes = [
     {
@@ -38,5 +39,12 @@ export const routes = [
         path: '/login',
         exact: false,
         component: Login
+    },
+    {
+        name: 'Result',
+        id: 'result',
+        path: '/result',
+        exact: false,
+        component: Result
     }
 ]

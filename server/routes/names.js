@@ -20,7 +20,10 @@ router.post('/vote', (req, res) => {
         if(votersList.getAllVotesCount() === (votersList.getAllVotersNames().length * 2)) {
             setTimeout(() => {
                 if(votersList.getAllVotesCount() === (votersList.getAllVotersNames().length * 2)) {
-                    socket.emit('end-of-vote');
+                    
+                    votersList.getWinnerName().then(
+                        (winner) => socket.emit('end-of-vote', winner)
+                    )
                 }
             }, 5000)
         }
@@ -36,6 +39,14 @@ router.post('/vote', (req, res) => {
 
         res.send({success: true, voteResponse: votesCountResponse});;
     }
+})
+
+router.post('/winner', (req, res) => {
+
+    votersList.getWinnerName().then(
+        (winner) => res.send({winner: winner})
+    )
+    console.log('getting the winner');
 })
 
 module.exports = router;

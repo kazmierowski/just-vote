@@ -53,19 +53,30 @@ class VotersList {
 
             if(this.voters[voterId] instanceof Voter) {
 
+                for(let nameId in this.votersSelectedNames) {
+
+                    if(this.votersSelectedNames[nameId].getValue() === name) {
+
+                        this.votersSelectedNames[nameId].addVote();
+
+                        this.voters[voterId].addName(this.votersSelectedNames[nameId]);
+                        return resolve({success: true, names: this.voters[voterId].getNames()})
+                    }
+                }
+
                 let nameId = this.getNameId();
 
-                let nameObject = new Name(nameId, name);
+                let nameObject = new Name(nameId, name, this.voters[voterId].getName());
 
                 this.votersSelectedNames[nameId] = nameObject;
 
                 this.voters[voterId].addName(nameObject);
 
-                if(this.voters[voterId].getNames().length === 2) {
-                    this.voters[voterId].setIsReady(true);
-                } else {
-                    this.voters[voterId].setIsReady(false);
-                }
+                // if(this.voters[voterId].getNames().length === 2) {
+                //     this.voters[voterId].setIsReady(true);
+                // } else {
+                //     this.voters[voterId].setIsReady(false);
+                // }
 
                 resolve({success: true, names: this.voters[voterId].getNames()});
 
@@ -116,6 +127,36 @@ class VotersList {
     getAllVotesCount() {
         return this.allVotesCount;
     }
-}
 
+    getWinnerName() {
+        return new Promise((resolve, reject) => {
+            //TODO: add option for the same votes count
+            // it will need to include second round
+            
+            let winner = {name: null, ownerName: null, votesCount: 0};
+
+            for(let name in this.votersSelectedNames) {
+                
+                if(this.votersSelectedNames[name].getVotesCount() > winner.votesCount) {
+                    winner = {
+                        name: this.votersSelectedNames[name].getValue(),
+                        ownerName: this.votersSelectedNames[name].getOwnerName(),
+                        votesCount: this.votersSelectedNames[name].getVotesCount()
+                    }
+                }
+            }
+
+            resolve(winner);
+        })
+    }
+
+    setUserReady(state, voterId) {
+        return new Promise((resolve, reject) => {
+
+            this.voters[voterId].setIsReady(state);
+
+            resolve({isReady: state});
+        })
+    }
+}
 module.exports = VotersList;

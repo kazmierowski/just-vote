@@ -17,6 +17,7 @@ const initialAppState = {
 
 const initialNamesState = {
     list: [],
+    winner: null,
     loading: false
 }
 
@@ -52,7 +53,7 @@ export const userReducer = (state = initialUserState, action) => {
 
         case 'USER_READY':
             return {
-                ...state, isReady: true
+                ...state, isReady: action.isReady
             }
 
         default:
@@ -119,6 +120,21 @@ export const namesReducer = (state = initialNamesState, action) => {
 
             return {
                 ...state, loading: false, list: newState.list
+            }
+
+        case 'GET_WINNER_NAME_START':
+            return {
+                ...state, loading: true
+            }
+
+        case 'GET_WINNER_NAME_COMPLETED':
+            return {
+                ...state, loading: false, winner: action.winner
+            }
+
+        case 'GET_WINNER_NAME_ERROR':
+            return {
+                state
             }
 
 

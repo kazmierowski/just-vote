@@ -13,7 +13,11 @@ router.post('/is-waiting', (req, res) => {
             if(data.areReady) {
                 socket.emit('all-voters-ready');
                 setTimeout(() => {
-                    socket.emit('end-of-vote');
+                    votersList.getWinnerName().then(
+                        (winner) => socket.emit('end-of-vote', winner)
+                    ).catch((error) => {
+                        console.log(error)
+                    })
                 }, 90000);
             }
 

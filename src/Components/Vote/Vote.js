@@ -5,7 +5,9 @@ import {animation} from "../../variables";
 import ReactCSSTransitionGroup from "react-addons-css-transition-group";
 import connect from "react-redux/es/connect/connect";
 import {bindActionCreators} from "redux";
-import {addSelectedNames, isAppWaiting, getAllNames, voteForName} from "../../actions";
+import {addSelectedNames, isAppWaiting, getAllNames, voteForName, getWinnerName} from "../../actions";
+import socket from '../../socket';
+import Redirect from "react-router-dom/es/Redirect";
 
 const testList = ['biology', 'binnacles', 'boby', 'bingo', 'banana', 'biscuit', 'butter', 'bug', 'bar', 'biology', 'binnacles', 'boby', 'bingo', 'banana', 'biscuit', 'butter'];
 
@@ -19,6 +21,21 @@ class Vote extends Component {
         this.state = {
             selectedNamesCount: 0
         }
+    }
+
+    componentDidMount() {
+        socket.on('end-of-vote', (winner) => {
+            
+            console.log(winner);
+            this.props.getWinnerName(winner);
+            console.log('END OF VOTE');
+
+            //FIXME: check why the history.push is not working here
+            // maybe because app is not inside the router?
+            this.props.history.push("result");
+
+            console.log('history from app:', this.props.history)
+        })
     }
 
     voteClickHandler = (e) => {
@@ -75,7 +92,7 @@ class Vote extends Component {
 
             if(this.props.app.afterVote) {
                 return (
-                    <div>The winner is:</div>
+                    <Redirect to={"/result"}/>
                 )
 
             } else {
@@ -100,7 +117,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = dispatch => {
-    return bindActionCreators({isAppWaiting: isAppWaiting, getAllNames: getAllNames, voteForName: voteForName}, dispatch);
+    return bindActionCreators({isAppWaiting: isAppWaiting, getAllNames: getAllNames, voteForName: voteForName, getWinnerName: getWinnerName}, dispatch);
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Vote);

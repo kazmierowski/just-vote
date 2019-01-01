@@ -10,7 +10,8 @@ import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import {animation} from './variables';
 import socket from './socket';
 import { bindActionCreators } from 'redux';
-import { allVotersReady, getAllNames } from './actions';
+import { allVotersReady, getAllNames, getWinnerName } from './actions';
+import { withRouter } from 'react-router-dom'
 
 class App extends Component {
 
@@ -29,10 +30,6 @@ class App extends Component {
 
         socket.on('new-voter', (data) => {
             console.log('new user logged in:', data.votersCount);
-        })
-
-        socket.on('end-of-vote', () => {
-            console.log('END OF VOTE');
         })
     }
 
@@ -54,7 +51,6 @@ class App extends Component {
                             <Header/>
                             <div className="App-content">
                                 <Switch>
-
                                     {
                                         routes.map((route, index) => (
                                             <Route
@@ -65,7 +61,6 @@ class App extends Component {
                                             />
                                         ))
                                     }
-
                                 </Switch>
 
                             </div>
@@ -84,7 +79,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = dispatch => {
-    return bindActionCreators({allVotersReady: allVotersReady, getAllNames: getAllNames}, dispatch);
+    return bindActionCreators({allVotersReady: allVotersReady, getAllNames: getAllNames, getWinnerName: getWinnerName}, dispatch);
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

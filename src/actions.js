@@ -74,14 +74,27 @@ export const addSelectedNamesCompleted = (names) => {
 export const addSelectedNamesError = (error) => {
     return {
         type: 'ADD_SELECTED_NAMES_ERROR',
-        error
+        error: error
     }
 }
 
 // User ready
 export const userReady = () => {
+    return dispatch => {
+
+        console.log('user ready triggered');
+
+        axios.post(window.location.protocol + '//' + window.location.host + '/user/ready', {isReady: true})
+            .then(res => {
+                dispatch(userReadyCompleted(res.data.isReady))
+            })
+    }
+}
+
+export const userReadyCompleted = (isReady) => {
     return {
-        type: 'USER_READY'
+        type: 'USER_READY',
+        isReady: isReady
     }
 }
 
@@ -208,5 +221,49 @@ export const voteForNameCompleted = (voteResponse) => {
     return {
         type: 'VOTE_FOR_NAME_COMPLETED',
         voteResponse: voteResponse
+    }
+}
+
+export const getWinnerName = (winner = null) => {
+
+    return dispatch => {
+
+        if(winner) {
+            dispatch(getWinnerNameCompleted(winner));
+            return;
+        }
+
+        console.log('getting the winner name');
+        dispatch(getWinnerNameStart());
+
+        axios.post(window.location.protocol + '//' + window.location.host + '/names/winner')
+            .then(res => {
+                dispatch(getWinnerNameCompleted(res.data.winner));
+                console.log('winner response:', res.data.winner);
+            })
+            .catch(error => {
+                dispatch(getWinnerNameError(error));
+                console.log('get winner error:', error);
+            })
+    }
+}
+
+export const getWinnerNameStart = () => {
+    return {
+        type: 'GET_WINNER_NAME_START'
+    }
+}
+
+export const getWinnerNameCompleted = (winner) => {
+    return {
+        type: 'GET_WINNER_NAME_COMPLETED',
+        winner: winner
+    }
+}
+
+export const getWinnerNameError = (error) => {
+    return {
+        type: 'GET_WINNER_NAME_ERROR',
+        error: error
     }
 }

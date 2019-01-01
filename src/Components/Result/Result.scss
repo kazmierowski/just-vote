@@ -1,0 +1,33 @@
+.Result {
+    
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: normal;
+    text-align: center;
+
+    font-size: 20px;
+
+    list-style-type: none;
+    padding: 0;
+
+    &-introduction {
+        opacity: 0; 
+        transition: opacity 1s;
+
+        &.visible {
+            opacity: 1;
+        }
+    }
+
+    &-winner-name {
+        opacity: 0;
+        transition: opacity 1s;
+
+        &.visible {
+            opacity: 1;
+        }
+    }
+
+    
+}

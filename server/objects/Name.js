@@ -1,13 +1,22 @@
 class Name {
 
-    constructor(id, value) {
+    constructor(id, value, ownerName) {
         this.id = id;
         this.value = value;
         this.votesCount = 0;
+        this.ownerName = ownerName;
     }
 
     getValue() {
         return this.value;
+    }
+
+    getVotesCount() {
+        return this.votesCount;
+    }
+
+    getOwnerName() {
+        return this.ownerName;
     }
 
     getId() {
