@@ -12,7 +12,10 @@ const initialUserState = {
 const initialAppState = {
     waiting: false,
     afterVote: false,
-    loading: false
+    loading: false,
+    resultMessage: null,
+    roundCount: 0,
+    possibleVotes: 2
 }
 
 const initialNamesState = {
@@ -86,6 +89,16 @@ export const appReducer = (state = initialAppState, action) => {
                 ...state, waiting: false
             }
 
+        case 'UPDATE_RESULT_MESSAGE':
+            return {
+                ...state, resultMessage: action.message
+            }
+
+        case 'UPDATE_ROUND_COUNT':
+            return {
+                ...state, roundCount: action.roundCount, possibleVotes: action.possibleVotes
+            }
+
 
         default:
             return state;
@@ -102,6 +115,7 @@ export const namesReducer = (state = initialNamesState, action) => {
             }
 
         case 'GET_ALL_NAMES_COMPLETED':
+        
             return {
                 ...state, loading: false, list: action.names
             }

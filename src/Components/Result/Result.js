@@ -28,8 +28,8 @@ class Result extends Component {
     render() {
         return (
         <div className="Result">
-            <p ref={this.introductionRef} className="Result-introduction">The winner is</p>
-            <p ref={this.nameRef} className="Result-winner-name">{this.props.names.winner.name}</p>
+            <p ref={this.introductionRef} className="Result-introduction">{this.props.resultMessage}</p>
+            <p ref={this.nameRef} className="Result-winner-name">{this.props.names.winner ? this.props.names.winner.value : ''}</p>
 
             <div className="Result-diagram"></div>
         </div>
@@ -39,7 +39,8 @@ class Result extends Component {
 
 const mapStateToProps = (state) => ({
     names: state.names,
-    user: state.user
+    user: state.user,
+    resultMessage: state.app.resultMessage
 });
 
 const mapDispatchToProps = dispatch => {

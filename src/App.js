@@ -11,7 +11,6 @@ import {animation} from './variables';
 import socket from './socket';
 import { bindActionCreators } from 'redux';
 import { allVotersReady, getAllNames, getWinnerName } from './actions';
-import { withRouter } from 'react-router-dom'
 
 class App extends Component {
 
@@ -24,6 +23,7 @@ class App extends Component {
         }
 
         socket.on('all-voters-ready', () => { 
+            console.log('get all names from apppppppppp')
             this.props.getAllNames();
             this.props.allVotersReady();
         })

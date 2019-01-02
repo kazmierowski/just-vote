@@ -149,10 +149,31 @@ export const allVotersReady = () => {
     }
 }
 
+export const updateResultMessage = (message) => {
+
+    return {
+        type: 'UPDATE_RESULT_MESSAGE',
+        message: message
+    }
+}
+
+export const updateRoundCount = (roundCount, possibleVotes) => {
+    return {
+        type: 'UPDATE_ROUND_COUNT',
+        roundCount: roundCount,
+        possibleVotes: possibleVotes
+    }
+}
+
 // Names
-export const getAllNames = () => {
+export const getAllNames = (names = null) => {
 
     return dispatch => {
+
+        if(names !== null) {
+            dispatch(getAllNamesCompleted(names));
+            return;
+        }
 
         console.log('get all names start');
 
@@ -238,7 +259,7 @@ export const getWinnerName = (winner = null) => {
 
         axios.post(window.location.protocol + '//' + window.location.host + '/names/winner')
             .then(res => {
-                dispatch(getWinnerNameCompleted(res.data.winner));
+                dispatch(getWinnerNameCompleted(res.data.winner, res.data.message));
                 console.log('winner response:', res.data.winner);
             })
             .catch(error => {
@@ -254,10 +275,11 @@ export const getWinnerNameStart = () => {
     }
 }
 
-export const getWinnerNameCompleted = (winner) => {
+export const getWinnerNameCompleted = (winner, resultMessage) => {
     return {
         type: 'GET_WINNER_NAME_COMPLETED',
-        winner: winner
+        winner: winner,
+        resultMessage: resultMessage
     }
 }
 

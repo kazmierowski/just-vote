@@ -15,6 +15,8 @@ class VotersList {
         this.voterId = 0;
         this.nameId = 0;
         this.allVotesCount = 0;
+        this.roundsCount = 1;
+        this.historyVotes = {};
 
         return instance;
     }
@@ -133,20 +135,57 @@ class VotersList {
             //TODO: add option for the same votes count
             // it will need to include second round
             
-            let winner = {name: null, ownerName: null, votesCount: 0};
+            let winner = [];
+
+            // let winningVoteCount = Math.max.apply(Math, Object.keys(this.votersSelectedNames)
+            //     .map((name) => {return this.votersSelectedNames[name].getVotesCount()})
+            // )
+
+            let winningVoteCount = Math.max(...Object.keys(this.votersSelectedNames)
+                .map(name => this.votersSelectedNames[name].getVotesCount()), 0)
 
             for(let name in this.votersSelectedNames) {
                 
-                if(this.votersSelectedNames[name].getVotesCount() > winner.votesCount) {
-                    winner = {
-                        name: this.votersSelectedNames[name].getValue(),
-                        ownerName: this.votersSelectedNames[name].getOwnerName(),
-                        votesCount: this.votersSelectedNames[name].getVotesCount()
-                    }
+                if(this.votersSelectedNames[name].getVotesCount() === winningVoteCount) {
+
+                    winner.push(this.votersSelectedNames[name]);
+                    // winner.push({
+                    //         id: this.votersSelectedNames[name].getId(),
+                    //         name: this.votersSelectedNames[name].getValue(),
+                    //         ownerName: this.votersSelectedNames[name].getOwnerName(),
+                    //         votesCount: this.votersSelectedNames[name].getVotesCount()
+                    //     })
                 }
             }
 
-            resolve(winner);
+            // include second vote if there is more than one winner
+            if(winner.length > 1) {
+                this.addRoundsCount();
+
+                console.log(`There need to be ${this.getRoundsCount()} round`)
+
+                if(this.getRoundsCount() === 0) {
+                    this.historyVotes.initial = this.votersSelectedNames;
+                } else {
+                    this.historyVotes[`round_${this.getRoundsCount()}`] = this.votersSelectedNames;
+                }
+
+                this.votersSelectedNames = {};
+
+                console.log('history votes:', this.historyVotes);
+
+                winner.forEach(name => {
+                    console.log('name id', name.id)
+                    this.votersSelectedNames[name.id] = name;
+                })
+
+                console.log('second round names:', this.votersSelectedNames);
+            
+                return reject({roundCount: this.getRoundsCount(), newRoundNames: this.votersSelectedNames[`round_${this.getRoundsCount()}`]})
+            }
+
+            console.log('sending the winner');
+            resolve(winner[0]);
         })
     }
 
@@ -157,6 +196,25 @@ class VotersList {
 
             resolve({isReady: state});
         })
+    }
+
+    addRoundsCount() {
+        this.roundsCount = this.roundsCount + 1;
+    }
+
+    getRoundsCount() {
+        return this.roundsCount;
+    }
+
+    resetAllReadyStates() {
+        
+        Object.entries(this.voters).forEach(([index, voter]) => {
+            voter.setIsReady(false);
+        })
+    }
+
+    resetAllVotesCount() {
+        this.allVotesCount = 0;
     }
 }
 module.exports = VotersList;

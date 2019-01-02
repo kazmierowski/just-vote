@@ -5,12 +5,9 @@ import {animation} from "../../variables";
 import ReactCSSTransitionGroup from "react-addons-css-transition-group";
 import connect from "react-redux/es/connect/connect";
 import {bindActionCreators} from "redux";
-import {addSelectedNames, isAppWaiting, getAllNames, voteForName, getWinnerName} from "../../actions";
+import {addSelectedNames, isAppWaiting, getAllNames, voteForName, getWinnerName, updateResultMessage, updateRoundCount} from "../../actions";
 import socket from '../../socket';
 import Redirect from "react-router-dom/es/Redirect";
-
-const testList = ['biology', 'binnacles', 'boby', 'bingo', 'banana', 'biscuit', 'butter', 'bug', 'bar', 'biology', 'binnacles', 'boby', 'bingo', 'banana', 'biscuit', 'butter'];
-
 class Vote extends Component {
 
     constructor(props) {
@@ -19,29 +16,36 @@ class Vote extends Component {
         props.isAppWaiting();
 
         this.state = {
-            selectedNamesCount: 0
+            selectedNamesCount: 0,
+            allowedSelectionCount: 2
         }
     }
 
     componentDidMount() {
-        socket.on('end-of-vote', (winner) => {
-            
-            console.log(winner);
-            this.props.getWinnerName(winner);
+        socket.on('end-of-vote', (data) => {
+            this.props.getWinnerName(data.winner);
+            this.props.updateResultMessage(data.message);
+
             console.log('END OF VOTE');
-
-            //FIXME: check why the history.push is not working here
-            // maybe because app is not inside the router?
             this.props.history.push("result");
+        })
 
-            console.log('history from app:', this.props.history)
+        socket.on('next-round', (data) => {
+            this.props.updateResultMessage(data.message);
+            this.props.getAllNames(data.newRoundNames);
+            this.props.updateRoundCount(data.roundCount, 1);
+            
+            setTimeout(() => {
+                this.props.history.push("vote")
+            }, 8000);
+            
+            this.props.history.push("result");
         })
     }
 
     voteClickHandler = (e) => {
 
-        console.log('Vote class click handler')
-
+        console.log('possibleVotes:', this.props.app.possibleVotes)
         if (e.target.classList.contains('selected')) {
 
             this.props.voteForName(e.target.id, 'remove');
@@ -53,7 +57,7 @@ class Vote extends Component {
             }));
         } else {
 
-            if (this.state.selectedNamesCount < 2) {
+            if (this.state.selectedNamesCount < this.props.app.possibleVotes) {
 
                 this.props.voteForName(e.target.id, 'add');
                 e.target.classList.add('selected');
@@ -73,6 +77,7 @@ class Vote extends Component {
     }
 
     render() {
+        console.log('render of vote');
         if(this.props.app.waiting) {
             return (
                 <ReactCSSTransitionGroup
@@ -117,7 +122,15 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = dispatch => {
-    return bindActionCreators({isAppWaiting: isAppWaiting, getAllNames: getAllNames, voteForName: voteForName, getWinnerName: getWinnerName}, dispatch);
+    return bindActionCreators(
+        {
+            isAppWaiting: isAppWaiting,
+            getAllNames: getAllNames,
+            voteForName: voteForName,
+            getWinnerName: getWinnerName,
+            updateResultMessage: updateResultMessage,
+            updateRoundCount: updateRoundCount
+        }, dispatch);
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Vote);
