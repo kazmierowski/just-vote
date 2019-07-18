@@ -6,7 +6,7 @@ import connect from "react-redux/es/connect/connect";
 import NamesList from "../NamesList/NamesList";
 import './Insert.scss';
 import {withRouter} from "react-router-dom";
-
+import Redirect from 'react-router/es/Redirect';
 class Insert extends Component {
 
     handleAddName = (name) => {
@@ -25,6 +25,11 @@ class Insert extends Component {
     }
 
     render() {
+        // if(this.props.user.isReady) {
+        //     return(
+        //         <Redirect to={'/vote/'} />
+        //     )
+        // }
         return(
             <div className="Insert">
                 <NamesList where="insert" names={this.props.userNames}/>
@@ -44,4 +49,4 @@ const mapDispatchToProps = dispatch => {
     return bindActionCreators({addSelectedNames: addSelectedNames, userReady: userReady}, dispatch);
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Insert);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Insert));

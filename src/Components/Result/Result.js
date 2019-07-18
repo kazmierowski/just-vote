@@ -31,7 +31,10 @@ class Result extends Component {
             <p ref={this.introductionRef} className="Result-introduction">{this.props.resultMessage}</p>
             <p ref={this.nameRef} className="Result-winner-name">{this.props.names.winner ? this.props.names.winner.value : ''}</p>
 
-            <div className="Result-diagram"></div>
+            <div className="Result-diagram">
+                {/* <Chart /> */}
+            </div>
+            
         </div>
         )
     }

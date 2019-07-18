@@ -12,7 +12,6 @@ class Vote extends Component {
 
     constructor(props) {
         super(props);
-
         props.isAppWaiting();
 
         this.state = {
@@ -34,11 +33,11 @@ class Vote extends Component {
             this.props.updateResultMessage(data.message);
             this.props.getAllNames(data.newRoundNames);
             this.props.updateRoundCount(data.roundCount, 1);
-            
+
             setTimeout(() => {
                 this.props.history.push("vote")
             }, 8000);
-            
+
             this.props.history.push("result");
         })
     }

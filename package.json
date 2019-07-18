@@ -1,8 +1,9 @@
 {
   "name": "just-vote",
-  "version": "0.1.0",
+  "version": "0.6.0",
   "private": true,
   "dependencies": {
+    "@nivo/bar": "^0.52.0",
     "axios": "^0.18.0",
     "body-parser": "^1.18.3",
     "cookie-parser": "^1.4.3",
@@ -38,7 +39,10 @@
   "browserslist": [
     ">0.2%",
     "not dead",
-    "not ie < 11",
+    "not ie < 10",
     "not op_mini all"
-  ]
+  ],
+  "devDependencies": {
+    "jest": "^23.6.0"
+  }
 }
